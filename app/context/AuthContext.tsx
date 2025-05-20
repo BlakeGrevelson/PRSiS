@@ -47,9 +47,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const users = getUsersFromStorage();
     const found = users.find(u => u.email === email && u.password === password);
     if (!found) throw new Error('Пользователь не найден или неверный пароль');
-    const { password: passwordToRemove, ...userData } = found;
-    setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
+    const { password, ...userDataWithoutPassword } = found;
+    setUser(userDataWithoutPassword);
+    localStorage.setItem('user', JSON.stringify(userDataWithoutPassword));
   };
 
   const register = async (name: string, email: string, phone: string, password: string) => {
@@ -65,9 +65,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
     users.push(newUser);
     saveUsersToStorage(users);
-    const { password: passwordToRemove, ...userData } = newUser;
-    setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
+    const { password, ...userDataWithoutPassword } = newUser;
+    setUser(userDataWithoutPassword);
+    localStorage.setItem('user', JSON.stringify(userDataWithoutPassword));
   };
 
   const logout = () => {
