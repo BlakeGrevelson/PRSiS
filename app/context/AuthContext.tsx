@@ -47,7 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const users = getUsersFromStorage();
     const found = users.find(u => u.email === email && u.password === password);
     if (!found) throw new Error('Пользователь не найден или неверный пароль');
-    const { password, ...userDataWithoutPassword } = found;
+    const { password: _password, ...userDataWithoutPassword } = found;
     setUser(userDataWithoutPassword);
     localStorage.setItem('user', JSON.stringify(userDataWithoutPassword));
   };
@@ -65,7 +65,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
     users.push(newUser);
     saveUsersToStorage(users);
-    const { password, ...userDataWithoutPassword } = newUser;
+    const { password: _password, ...userDataWithoutPassword } = newUser;
     setUser(userDataWithoutPassword);
     localStorage.setItem('user', JSON.stringify(userDataWithoutPassword));
   };
