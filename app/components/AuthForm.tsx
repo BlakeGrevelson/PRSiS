@@ -23,7 +23,7 @@ export default function AuthForm() {
       } else {
         await register(formData.name, formData.email, formData.phone, formData.password);
       }
-    } catch (err) {
+    } catch {
       setError('Ошибка авторизации или регистрации');
     }
   };
