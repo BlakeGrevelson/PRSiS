@@ -2,10 +2,12 @@
 
 import React from "react";
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import Link from 'next/link';
 
 export default function CartPage() {
   const { items, removeFromCart, updateDays, clearCart, total } = useCart();
+  const { isAuthenticated } = useAuth();
   return (
     <div className="max-w-2xl mx-auto py-10 px-4 bg-white rounded-xl shadow-md">
       <div className="flex justify-end mb-4">
@@ -44,7 +46,14 @@ export default function CartPage() {
             <div className="text-2xl font-bold text-green-700">{total} ₽</div>
           </div>
           <button onClick={clearCart} className="w-full bg-gray-200 text-gray-700 py-2 rounded hover:bg-gray-300 transition mb-2">Очистить корзину</button>
-          <button className="w-full bg-blue-700 text-white py-3 rounded-lg font-semibold hover:bg-blue-800 transition">Оформить заказ</button>
+          {isAuthenticated ? (
+            <button className="w-full bg-blue-700 text-white py-3 rounded-lg font-semibold hover:bg-blue-800 transition">Оформить заказ</button>
+          ) : (
+            <div className="w-full text-center mt-4">
+              <div className="text-red-600 font-semibold mb-2">Только зарегистрированные пользователи могут оформить заказ.</div>
+              <Link href="/profile" className="inline-block bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800 transition">Войти или зарегистрироваться</Link>
+            </div>
+          )}
         </>
       )}
     </div>
